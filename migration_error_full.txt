@@ -1,0 +1,166 @@
+
+
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[HY000] [1044] Access denied for user 'yazid'@'%' to database 'umrah_erp' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: umrah_erp, SQL: select exists (select 1 from information_schema.tables where table_schema = schema() and table_name = 'migrations' and table_type in ('BASE TABLE', 'SYSTEM VERSIONED')) as `exists`)
+
+  at vendor/laravel/framework/src/Illuminate/Database/Connection.php:838
+    834▕             $exceptionType = $this->isUniqueConstraintError($e)
+    835▕                 ? UniqueConstraintViolationException::class
+    836▕                 : QueryException::class;
+    837▕ 
+  ➜ 838▕             throw new $exceptionType(
+    839▕                 $this->getNameWithReadWriteType(),
+    840▕                 $query,
+    841▕                 $this->prepareBindings($bindings),
+    842▕                 $e,
+
+  1   vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:66
+      PDOException::("SQLSTATE[HY000] [1044] Access denied for user 'yazid'@'%' to database 'umrah_erp'")
+
+  2   vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:66
+      PDO::__construct()
+
+  3   vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:44
+      Illuminate\Database\Connectors\Connector::createPdoConnection()
+
+  4   vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php:24
+      Illuminate\Database\Connectors\Connector::createConnection()
+
+  5   vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php:186
+      Illuminate\Database\Connectors\MySqlConnector::connect()
+
+  6   vendor/laravel/framework/src/Illuminate/Database/Connection.php:1257
+      Illuminate\Database\Connectors\ConnectionFactory::Illuminate\Database\Connectors\{closure}()
+  7   vendor/laravel/framework/src/Illuminate/Database/Connection.php:1257
+
+  8   vendor/laravel/framework/src/Illuminate/Database/Connection.php:1295
+      Illuminate\Database\Connection::getPdo()
+
+  9   vendor/laravel/framework/src/Illuminate/Database/Connection.php:525
+      Illuminate\Database\Connection::getReadPdo()
+
+  10  vendor/laravel/framework/src/Illuminate/Database/Connection.php:420
+      Illuminate\Database\Connection::getPdoForSelect()
+
+  11  vendor/laravel/framework/src/Illuminate/Database/Connection.php:827
+      Illuminate\Database\Connection::Illuminate\Database\{closure}()
+
+  12  vendor/laravel/framework/src/Illuminate/Database/Connection.php:794
+      Illuminate\Database\Connection::runQueryCallback()
+
+  13  vendor/laravel/framework/src/Illuminate/Database/Connection.php:411
+      Illuminate\Database\Connection::run()
+
+  14  vendor/laravel/framework/src/Illuminate/Database/Connection.php:357
+      Illuminate\Database\Connection::select()
+
+  15  vendor/laravel/framework/src/Illuminate/Database/Connection.php:374
+      Illuminate\Database\Connection::selectOne()
+
+  16  vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php:176
+      Illuminate\Database\Connection::scalar()
+
+  17  vendor/laravel/framework/src/Illuminate/Database/Migrations/DatabaseMigrationRepository.php:185
+      Illuminate\Database\Schema\Builder::hasTable()
+
+  18  vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:758
+      Illuminate\Database\Migrations\DatabaseMigrationRepository::repositoryExists()
+
+  19  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:164
+      Illuminate\Database\Migrations\Migrator::repositoryExists()
+
+  20  vendor/laravel/framework/src/Illuminate/Support/helpers.php:327
+      Illuminate\Database\Console\Migrations\MigrateCommand::Illuminate\Database\Console\Migrations\{closure}()
+  21  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:164
+
+  22  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:140
+      Illuminate\Database\Console\Migrations\MigrateCommand::repositoryExists()
+
+  23  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:110
+      Illuminate\Database\Console\Migrations\MigrateCommand::prepareDatabase()
+
+  24  vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:671
+      Illuminate\Database\Console\Migrations\MigrateCommand::Illuminate\Database\Console\Migrations\{closure}()
+
+  25  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:109
+      Illuminate\Database\Migrations\Migrator::usingConnection()
+
+  26  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:88
+      Illuminate\Database\Console\Migrations\MigrateCommand::runMigrations()
+
+  27  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:36
+      Illuminate\Database\Console\Migrations\MigrateCommand::handle()
+
+  28  vendor/laravel/framework/src/Illuminate/Container/Util.php:43
+      Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+
+  29  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:96
+      Illuminate\Container\Util::unwrapIfClosure()
+
+  30  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:35
+      Illuminate\Container\BoundMethod::callBoundMethod()
+
+  31  vendor/laravel/framework/src/Illuminate/Container/Container.php:799
+      Illuminate\Container\BoundMethod::call()
+
+  32  vendor/laravel/framework/src/Illuminate/Console/Command.php:211
+      Illuminate\Container\Container::call()
+
+  33  vendor/symfony/console/Command/Command.php:341
+      Illuminate\Console\Command::execute()
+
+  34  vendor/laravel/framework/src/Illuminate/Console/Command.php:180
+      Symfony\Component\Console\Command\Command::run()
+
+  35  vendor/laravel/framework/src/Illuminate/Console/Concerns/CallsCommands.php:68
+      Illuminate\Console\Command::run()
+
+  36  vendor/laravel/framework/src/Illuminate/Console/Concerns/CallsCommands.php:29
+      Illuminate\Console\Command::runCommand()
+
+  37  vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/FreshCommand.php:88
+      Illuminate\Console\Command::call()
+
+  38  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:36
+      Illuminate\Database\Console\Migrations\FreshCommand::handle()
+
+  39  vendor/laravel/framework/src/Illuminate/Container/Util.php:43
+      Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+
+  40  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:96
+      Illuminate\Container\Util::unwrapIfClosure()
+
+  41  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:35
+      Illuminate\Container\BoundMethod::callBoundMethod()
+
+  42  vendor/laravel/framework/src/Illuminate/Container/Container.php:799
+      Illuminate\Container\BoundMethod::call()
+
+  43  vendor/laravel/framework/src/Illuminate/Console/Command.php:211
+      Illuminate\Container\Container::call()
+
+  44  vendor/symfony/console/Command/Command.php:341
+      Illuminate\Console\Command::execute()
+
+  45  vendor/laravel/framework/src/Illuminate/Console/Command.php:180
+      Symfony\Component\Console\Command\Command::run()
+
+  46  vendor/symfony/console/Application.php:1117
+      Illuminate\Console\Command::run()
+
+  47  vendor/symfony/console/Application.php:356
+      Symfony\Component\Console\Application::doRunCommand()
+
+  48  vendor/symfony/console/Application.php:195
+      Symfony\Component\Console\Application::doRun()
+
+  49  vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php:198
+      Symfony\Component\Console\Application::run()
+
+  50  vendor/laravel/framework/src/Illuminate/Foundation/Application.php:1235
+      Illuminate\Foundation\Console\Kernel::handle()
+
+  51  artisan:16
+      Illuminate\Foundation\Application::handleCommand()
+
