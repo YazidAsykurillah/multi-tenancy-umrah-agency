@@ -15,13 +15,12 @@ class RoleSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // We create owner and admin roles for EACH tenant
-        // However, with Spatie Teams, we just create them once and the team_id handles the scoping
-        // Actually, we need to create the roles with team_id = null first if we want them to be templates,
-        // or just create them per tenant.
-        
-        // The common way is to set the team_id before creating the role.
-        
+        // Create Global Roles (System Users)
+        setPermissionsTeamId(null);
+        Role::firstOrCreate(['name' => 'Super Admin', 'team_id' => null]);
+        Role::firstOrCreate(['name' => 'Admin', 'team_id' => null]);
+        Role::firstOrCreate(['name' => 'Customer Service', 'team_id' => null]);
+
         Tenant::all()->each(function (Tenant $tenant) {
             setPermissionsTeamId($tenant->id);
             

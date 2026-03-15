@@ -11,23 +11,39 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::firstOrCreate(['email' => 'admin@example.com'], [
-            'name' => 'Si Admin',
+        // 1. Create Super Admin (Global User)
+        $superAdmin = User::firstOrCreate(['email' => 'superadmin@example.com'], [
+            'name' => 'Platform Super Admin',
             'password' => Hash::make('password'),
         ]);
+        
+        // Reset team context for global role assignment
+        setPermissionsTeamId(null);
+        $superAdmin->assignRole('Super Admin');
 
+        // 2. Create Tenant-Specific Users
         $alfatih = Tenant::where('slug', 'al-fatih')->first();
         $haramain = Tenant::where('slug', 'haramain')->first();
 
-        // Assign Admin to both tenants so they can log in
-        $admin->tenants()->syncWithoutDetaching([$alfatih->id, $haramain->id]);
-
+        // Owner 1
         $owner1 = User::firstOrCreate(['email' => 'owner@alfatih.com'], [
             'name' => 'Owner Al-Fatih',
             'password' => Hash::make('password'),
         ]);
         $owner1->tenants()->syncWithoutDetaching([$alfatih->id]);
+        
+        // Assistant Admin (using the original name/email but contextually a tenant user now if we want)
+        // Or keep it as a platform admin who also has tenant access
+        $platformAdmin = User::firstOrCreate(['email' => 'admin@example.com'], [
+            'name' => 'Si Admin',
+            'password' => Hash::make('password'),
+        ]);
+        $platformAdmin->tenants()->syncWithoutDetaching([$alfatih->id, $haramain->id]);
+        
+        setPermissionsTeamId(null);
+        $platformAdmin->assignRole('Admin');
 
+        // Owner 2
         $owner2 = User::firstOrCreate(['email' => 'owner@haramain.com'], [
             'name' => 'Owner Haramain',
             'password' => Hash::make('password'),

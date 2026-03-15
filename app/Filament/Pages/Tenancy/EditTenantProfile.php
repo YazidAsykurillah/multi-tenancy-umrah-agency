@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages\Tenancy;
 
-use App\Filament\Resources\Tenants\Schemas\TenantForm;
+use App\Filament\Resources\System\Tenants\Schemas\TenantForm;
 use Filament\Schemas\Schema;
 use Filament\Pages\Tenancy\EditTenantProfile as BaseEditTenantProfile;
 
