@@ -22,7 +22,8 @@ class TenantsTable
                     ->searchable()
                     ->sortable(),
                 ToggleColumn::make('is_active')
-                    ->label('Status'),
+                    ->label('Status')
+                    ->disabled(fn () => !auth()->user()->hasRole('Super Admin')),
             ])
             ->filters([
                 //

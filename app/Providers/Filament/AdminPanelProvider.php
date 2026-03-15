@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->tenant(\App\Models\Tenant::class)
+            ->tenantProfile(\App\Filament\Pages\Tenancy\EditTenantProfile::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

@@ -19,14 +19,20 @@ class TenantForm
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn ($set, ?string $state) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(function (string $context, $set, ?string $state) {
+                        if ($context === 'create') {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->required()
                     ->maxLength(255)
-                    ->unique(ignoreRecord: true),
+                    ->unique(ignoreRecord: true)
+                    ->disabled(fn (string $context): bool => $context !== 'create'),
                 Toggle::make('is_active')
                     ->label('Active Status')
-                    ->default(true),
+                    ->default(true)
+                    ->disabled(fn () => !auth()->user()->hasRole('Super Admin')),
             ]);
     }
 }

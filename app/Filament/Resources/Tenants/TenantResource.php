@@ -20,6 +20,11 @@ class TenantResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasRole('Super Admin');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return TenantForm::configure($schema);
