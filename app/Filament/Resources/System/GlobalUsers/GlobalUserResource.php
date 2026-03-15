@@ -22,6 +22,11 @@ class GlobalUserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->doesntHave('tenants');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);
@@ -32,15 +37,7 @@ class GlobalUserResource extends Resource
         return UsersTable::configure($table);
     }
 
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->hasRole(['Super Admin', 'Admin']);
-    }
 
-    public static function canCreate(): bool
-    {
-        return auth()->user()->hasRole('Super Admin');
-    }
 
     public static function getRelations(): array
     {

@@ -17,6 +17,8 @@ class RoleSeeder extends Seeder
 
         // Create Global Roles (System Users)
         setPermissionsTeamId(null);
+        $this->call(PermissionSeeder::class);
+        
         Role::firstOrCreate(['name' => 'Super Admin', 'team_id' => null]);
         Role::firstOrCreate(['name' => 'Admin', 'team_id' => null]);
         Role::firstOrCreate(['name' => 'Customer Service', 'team_id' => null]);

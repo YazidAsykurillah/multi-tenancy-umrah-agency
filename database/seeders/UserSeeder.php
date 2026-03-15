@@ -21,7 +21,16 @@ class UserSeeder extends Seeder
         setPermissionsTeamId(null);
         $superAdmin->assignRole('Super Admin');
 
-        // 2. Create Tenant-Specific Users
+        // 2. Create Admin (Global User)
+        $platformAdmin = User::firstOrCreate(['email' => 'admin@example.com'], [
+            'name' => 'Si Admin',
+            'password' => Hash::make('password'),
+        ]);
+
+        setPermissionsTeamId(null);
+        $platformAdmin->assignRole('Admin');
+
+        // 3. Create Tenant-Specific Users
         $alfatih = Tenant::where('slug', 'al-fatih')->first();
         $haramain = Tenant::where('slug', 'haramain')->first();
 
@@ -32,17 +41,6 @@ class UserSeeder extends Seeder
         ]);
         $owner1->tenants()->syncWithoutDetaching([$alfatih->id]);
         
-        // Assistant Admin (using the original name/email but contextually a tenant user now if we want)
-        // Or keep it as a platform admin who also has tenant access
-        $platformAdmin = User::firstOrCreate(['email' => 'admin@example.com'], [
-            'name' => 'Si Admin',
-            'password' => Hash::make('password'),
-        ]);
-        $platformAdmin->tenants()->syncWithoutDetaching([$alfatih->id, $haramain->id]);
-        
-        setPermissionsTeamId(null);
-        $platformAdmin->assignRole('Admin');
-
         // Owner 2
         $owner2 = User::firstOrCreate(['email' => 'owner@haramain.com'], [
             'name' => 'Owner Haramain',

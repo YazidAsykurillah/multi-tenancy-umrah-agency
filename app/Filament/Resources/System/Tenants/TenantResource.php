@@ -20,15 +20,7 @@ class TenantResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->hasRole('Super Admin');
-    }
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->user()->hasRole('Super Admin');
-    }
 
     public static function form(Schema $schema): Schema
     {
@@ -56,13 +48,5 @@ class TenantResource extends Resource
         ];
     }
 
-    public static function canCreate(): bool
-    {
-        return auth()->user()->hasRole('Super Admin');
-    }
 
-    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
-    {
-        return auth()->user()->hasRole('Super Admin');
-    }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\System\Tenants\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -23,13 +24,14 @@ class TenantsTable
                     ->sortable(),
                 ToggleColumn::make('is_active')
                     ->label('Status')
-                    ->disabled(fn () => !auth()->user()->hasRole('Super Admin')),
+                    ->disabled(fn () => !auth()->user()->can('change-tenant-status')),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
