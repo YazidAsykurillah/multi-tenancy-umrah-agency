@@ -19,31 +19,28 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class TenantPanelProvider extends PanelProvider
+class ManagerPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('tenant')
-            ->path('app/tenant')
+            ->default()
+            ->id('app')
+            ->path('app')
             ->login()
-            ->tenant(\App\Models\Tenant::class)
-            ->tenantProfile(\App\Filament\Pages\Tenancy\EditTenantProfile::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
-            ->discoverResources(in: app_path('Filament/Resources/Tenant'), for: 'App\\Filament\\Resources\\Tenant')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverResources(in: app_path('Filament/Resources/Manager'), for: 'App\\Filament\\Resources\\Manager')
+            ->discoverPages(in: app_path('Filament/Pages/Manager'), for: 'App\\Filament\\Pages\\Manager')
             ->pages([
-                Dashboard::class,
+                \App\Filament\Pages\Manager\ManagerDashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                
+                AccountWidget::class,
+                FilamentInfoWidget::class,
             ])
-            ->tenantMiddleware([
-                \App\Http\Middleware\TenantRoleMiddleware::class,
-            ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

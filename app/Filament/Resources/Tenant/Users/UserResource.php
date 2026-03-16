@@ -20,6 +20,8 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $slug = 'users';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $tenantOwnershipRelationshipName = 'tenants';
@@ -38,16 +40,6 @@ class UserResource extends Resource
     {
         return UsersTable::configure($table)
             ->modifyQueryUsing(fn (Builder $query) => $query->whereDoesntHave('roles', fn ($q) => $q->where('name', 'Super Admin'))); // Hide super admins if any
-    }
-
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->hasRole('Owner');
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->hasRole('Owner');
     }
 
     public static function getRelations(): array

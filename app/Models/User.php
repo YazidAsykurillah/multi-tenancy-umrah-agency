@@ -76,6 +76,10 @@ class User extends Authenticatable implements FilamentUser, HasTenants
             return $this->can('access_central_panel');
         }
 
+        if ($panel->getId() === 'app') {
+            return true; // All authenticated users can access the manager app
+        }
+
         return true;
     }
 

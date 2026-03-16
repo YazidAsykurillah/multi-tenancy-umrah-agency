@@ -18,6 +18,8 @@ class PilgrimResource extends Resource
 {
     protected static ?string $model = Pilgrim::class;
 
+    protected static ?string $slug = 'pilgrims';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function form(Schema $schema): Schema

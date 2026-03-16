@@ -12,6 +12,10 @@ class TenantPolicy
      */
     public function viewAny(User $user): bool
     {
+        if (\Filament\Facades\Filament::getCurrentPanel()?->getId() === 'app') {
+            return true;
+        }
+
         return $user->can('view_tenants');
     }
 
@@ -20,6 +24,10 @@ class TenantPolicy
      */
     public function view(User $user, Tenant $tenant): bool
     {
+        if (\Filament\Facades\Filament::getCurrentPanel()?->getId() === 'app') {
+            return $user->tenants->contains($tenant);
+        }
+
         return $user->can('view_tenants');
     }
 

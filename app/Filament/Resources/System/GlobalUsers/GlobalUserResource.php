@@ -20,13 +20,14 @@ class GlobalUserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $slug = 'global-users';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->doesntHave('tenants');
     }
-
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);
